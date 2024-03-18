@@ -24,7 +24,6 @@ import com.nageoffer.shortlink.project.dto.resp.ShortLinkCreateRespDTO;
 
 /**
  * 自定义流控策略
- * 公众号：马丁玩编程，回复：加群，添加马哥微信（备注：link）获取项目资料
  */
 public class CustomBlockHandler {
 

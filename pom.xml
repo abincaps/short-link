@@ -11,9 +11,9 @@
 
     <modules>
         <module>admin</module>
-        <module>aggregation</module>
         <module>project</module>
         <module>gateway</module>
+        <module>common</module>
     </modules>
 
     <properties>
@@ -33,6 +33,7 @@
         <jsoup.version>1.15.3</jsoup.version>
         <easyexcel.version>3.1.3</easyexcel.version>
         <spotless-maven-plugin.version>2.22.1</spotless-maven-plugin.version>
+        <jjwt-api.version>0.12.3</jjwt-api.version>
     </properties>
 
     <dependencies>
@@ -115,6 +116,13 @@
                 <artifactId>guava</artifactId>
                 <version>${guava.version}</version>
             </dependency>
+
+            <dependency>
+                <groupId>io.jsonwebtoken</groupId>
+                <artifactId>jjwt-api</artifactId>
+                <version>${jjwt-api.version}</version>
+            </dependency>
+
         </dependencies>
     </dependencyManagement>
 
@@ -137,11 +145,7 @@
                 <version>${spotless-maven-plugin.version}</version>
                 <configuration>
                     <java>
-                        <!--<eclipse>
-                            <file>${maven.multiModuleProjectDirectory}/format/short-link_spotless_formatter.xml</file>
-                        </eclipse>-->
                         <licenseHeader>
-                            <!-- ${maven.multiModuleProjectDirectory} 爆红属于正常，并不影响编译或者运行，忽略就好 -->
                             <file>${maven.multiModuleProjectDirectory}/format/license-header</file>
                         </licenseHeader>
                     </java>

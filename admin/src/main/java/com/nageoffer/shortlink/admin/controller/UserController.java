@@ -17,17 +17,17 @@
 
 package com.nageoffer.shortlink.admin.controller;
 
-import cn.hutool.core.bean.BeanUtil;
 import com.nageoffer.shortlink.admin.common.convention.result.Result;
 import com.nageoffer.shortlink.admin.common.convention.result.Results;
 import com.nageoffer.shortlink.admin.dto.req.UserLoginReqDTO;
 import com.nageoffer.shortlink.admin.dto.req.UserRegisterReqDTO;
 import com.nageoffer.shortlink.admin.dto.req.UserUpdateReqDTO;
 import com.nageoffer.shortlink.admin.dto.resp.UserActualRespDTO;
-import com.nageoffer.shortlink.admin.dto.resp.UserLoginRespDTO;
+import com.nageoffer.shortlink.admin.dto.resp.UserLoginVO;
 import com.nageoffer.shortlink.admin.dto.resp.UserRespDTO;
 import com.nageoffer.shortlink.admin.service.UserService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.BeanUtils;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -39,7 +39,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 /**
  * 用户管理控制层
- * 公众号：马丁玩编程，回复：加群，添加马哥微信（备注：link）获取项目资料
  */
 @RestController
 @RequiredArgsConstructor
@@ -60,7 +59,10 @@ public class UserController {
      */
     @GetMapping("/api/short-link/admin/v1/actual/user/{username}")
     public Result<UserActualRespDTO> getActualUserByUsername(@PathVariable("username") String username) {
-        return Results.success(BeanUtil.toBean(userService.getUserByUsername(username), UserActualRespDTO.class));
+        UserRespDTO useRespDTO = userService.getUserByUsername(username);
+        UserActualRespDTO userActualRespDTO = new UserActualRespDTO();
+        BeanUtils.copyProperties(useRespDTO, userActualRespDTO);
+        return Results.success(userActualRespDTO);
     }
 
     /**
@@ -74,7 +76,7 @@ public class UserController {
     /**
      * 注册用户
      */
-    @PostMapping("/api/short-link/admin/v1/user")
+    @PostMapping("/api/short-link/admin/v1/register")
     public Result<Void> register(@RequestBody UserRegisterReqDTO requestParam) {
         userService.register(requestParam);
         return Results.success();
@@ -93,7 +95,7 @@ public class UserController {
      * 用户登录
      */
     @PostMapping("/api/short-link/admin/v1/user/login")
-    public Result<UserLoginRespDTO> login(@RequestBody UserLoginReqDTO requestParam) {
+    public Result<UserLoginVO> login(@RequestBody UserLoginReqDTO requestParam) {
         return Results.success(userService.login(requestParam));
     }
 

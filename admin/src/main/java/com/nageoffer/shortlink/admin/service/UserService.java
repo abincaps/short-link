@@ -22,7 +22,7 @@ import com.nageoffer.shortlink.admin.dao.entity.UserDO;
 import com.nageoffer.shortlink.admin.dto.req.UserLoginReqDTO;
 import com.nageoffer.shortlink.admin.dto.req.UserRegisterReqDTO;
 import com.nageoffer.shortlink.admin.dto.req.UserUpdateReqDTO;
-import com.nageoffer.shortlink.admin.dto.resp.UserLoginRespDTO;
+import com.nageoffer.shortlink.admin.dto.resp.UserLoginVO;
 import com.nageoffer.shortlink.admin.dto.resp.UserRespDTO;
 
 /**
@@ -67,7 +67,7 @@ public interface UserService extends IService<UserDO> {
      * @param requestParam 用户登录请求参数
      * @return 用户登录返回参数 Token
      */
-    UserLoginRespDTO login(UserLoginReqDTO requestParam);
+    UserLoginVO login(UserLoginReqDTO requestParam);
 
     /**
      * 检查用户是否登录

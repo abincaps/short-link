@@ -40,7 +40,6 @@ import java.util.Objects;
 
 /**
  * SpringCloud Gateway Token 拦截器
- * 公众号：马丁玩编程，回复：加群，添加马哥微信（备注：link）获取项目资料
  */
 @Component
 public class TokenValidateGatewayFilterFactory extends AbstractGatewayFilterFactory<Config> {
@@ -55,13 +54,18 @@ public class TokenValidateGatewayFilterFactory extends AbstractGatewayFilterFact
     @Override
     public GatewayFilter apply(Config config) {
         return (exchange, chain) -> {
+
+
             ServerHttpRequest request = exchange.getRequest();
             String requestPath = request.getPath().toString();
             String requestMethod = request.getMethod().name();
+
             if (!isPathInWhiteList(requestPath, requestMethod, config.getWhitePathList())) {
                 String username = request.getHeaders().getFirst("username");
                 String token = request.getHeaders().getFirst("token");
+
                 Object userInfo;
+
                 if (StringUtils.hasText(username) && StringUtils.hasText(token) && (userInfo = stringRedisTemplate.opsForHash().get("short-link:login:" + username, token)) != null) {
                     JSONObject userInfoJsonObject = JSON.parseObject(userInfo.toString());
                     ServerHttpRequest.Builder builder = exchange.getRequest().mutate().headers(httpHeaders -> {
@@ -70,6 +74,7 @@ public class TokenValidateGatewayFilterFactory extends AbstractGatewayFilterFact
                     });
                     return chain.filter(exchange.mutate().request(builder.build()).build());
                 }
+
                 ServerHttpResponse response = exchange.getResponse();
                 response.setStatusCode(HttpStatus.UNAUTHORIZED);
                 return response.writeWith(Mono.fromSupplier(() -> {
@@ -81,10 +86,19 @@ public class TokenValidateGatewayFilterFactory extends AbstractGatewayFilterFact
                     return bufferFactory.wrap(JSON.toJSONString(resultMessage).getBytes());
                 }));
             }
+
+            // 放行
             return chain.filter(exchange);
         };
     }
 
+    /**
+     * 检查请求路径是否在白名单内
+     * @param requestPath
+     * @param requestMethod
+     * @param whitePathList
+     * @return
+     */
     private boolean isPathInWhiteList(String requestPath, String requestMethod, List<String> whitePathList) {
         return (!CollectionUtils.isEmpty(whitePathList) && whitePathList.stream().anyMatch(requestPath::startsWith)) || (Objects.equals(requestPath, "/api/short-link/admin/v1/user") && Objects.equals(requestMethod, "POST"));
     }

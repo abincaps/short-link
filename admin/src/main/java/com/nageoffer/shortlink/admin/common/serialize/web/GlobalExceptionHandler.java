@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-package com.nageoffer.shortlink.admin.common.web;
+package com.nageoffer.shortlink.admin.common.serialize.web;
 
 import cn.hutool.core.collection.CollectionUtil;
 import cn.hutool.core.util.ReflectUtil;
@@ -40,7 +40,6 @@ import java.util.Optional;
 
 /**
  * 全局异常处理器
- * 公众号：马丁玩编程，回复：加群，添加马哥微信（备注：link）获取项目资料
  */
 @Component("globalExceptionHandlerByAdmin")
 @Slf4j

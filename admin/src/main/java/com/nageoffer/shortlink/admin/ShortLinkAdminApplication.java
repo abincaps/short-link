@@ -17,6 +17,8 @@
 
 package com.nageoffer.shortlink.admin;
 
+import cn.hutool.jwt.JWT;
+import cn.hutool.jwt.JWTUtil;
 import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -25,7 +27,6 @@ import org.springframework.cloud.openfeign.EnableFeignClients;
 
 /**
  * 短链接后管应用
- * 公众号：马丁玩编程，回复：加群，添加马哥微信（备注：link）获取项目资料
  */
 @SpringBootApplication
 @EnableDiscoveryClient
@@ -35,5 +36,6 @@ public class ShortLinkAdminApplication {
 
     public static void main(String[] args) {
         SpringApplication.run(ShortLinkAdminApplication.class, args);
+
     }
 }

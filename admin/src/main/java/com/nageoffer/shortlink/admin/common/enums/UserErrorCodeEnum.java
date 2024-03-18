@@ -21,7 +21,6 @@ import com.nageoffer.shortlink.admin.common.convention.errorcode.IErrorCode;
 
 /**
  * 用户错误码
- * 公众号：马丁玩编程，回复：加群，添加马哥微信（备注：link）获取项目资料
  */
 public enum UserErrorCodeEnum implements IErrorCode {
 
