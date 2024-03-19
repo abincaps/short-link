@@ -1,0 +1,11 @@
+package com.abincaps.shortlink.admin.constant;
+
+/**
+ * @Author abincaps
+ * @Date 3/18/2024 11:58 AM
+ * @Description
+ */
+public interface UserConstant {
+
+    String USER_ID = "user_id";
+}

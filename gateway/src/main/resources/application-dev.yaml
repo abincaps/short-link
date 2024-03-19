@@ -13,6 +13,7 @@ spring:
                   - /api/short-link/admin/v1/user/login
                   - /api/short-link/admin/v1/user/has-username
                   - /api/short-link/admin/v1/user/register
+                  - /api/short-link/admin/v1/user/refresh
         - id: short-link-project
           uri: lb://short-link-project/api/short-link/**
           predicates:
@@ -21,6 +22,4 @@ spring:
             - name: TokenValidate
 short-link:
   token:
-    access-token-ttl: 300
-    refresh-token-ttl: 7200
-    secret-key: @v,:g-k-vE^8D`S%v0[&b'uNpXEV%NC}jlfW+Az_6!2"%T7whE'jB?l5Yi-vwqp'
+    secret-key: QHYsOmctay12RV44RGBTJXYwWyZiJ3VOcFhFViVOQ31qbGZXK0F6XzYhMiIlVDd3aEUnakI/bDVZaS12d3FwJw==

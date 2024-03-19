@@ -1,15 +1,12 @@
 package com.nageoffer.shortlink.gateway.filter;
 
 import cn.hutool.core.util.ObjectUtil;
-import cn.hutool.json.JSONUtil;
+import com.abincaps.shortlink.common.constant.TokenConstant;
 import com.nageoffer.shortlink.gateway.config.Config;
-import com.nageoffer.shortlink.gateway.constant.TokenConstant;
 import com.nageoffer.shortlink.gateway.properties.TokenProperties;
 import com.nageoffer.shortlink.gateway.utils.JwtUtils;
 import io.jsonwebtoken.Claims;
 import jakarta.annotation.Resource;
-import lombok.AllArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cloud.gateway.filter.GatewayFilter;
 import org.springframework.cloud.gateway.filter.factory.AbstractGatewayFilterFactory;
 import org.springframework.http.HttpStatus;
