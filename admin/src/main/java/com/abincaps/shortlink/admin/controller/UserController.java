@@ -111,22 +111,21 @@ public class UserController {
         return Results.success(loginVO);
     }
 
-    /**
-     * 检查用户是否登录
-     */
-    @GetMapping("/api/short-link/admin/v1/user/check-login")
-    public Result<Boolean> checkLogin(@RequestParam("username") String username, @RequestParam("token") String token) {
-        return Results.success(userService.checkLogin(username, token));
-    }
+    // TODO 准备移除检查用户是否登录
+//    /**
+//     * 检查用户是否登录
+//     */
+//    @GetMapping("/api/short-link/admin/v1/user/check-login")
+//    public Result<Boolean> checkLogin(@RequestParam("username") String username, @RequestParam("token") String token) {
+//        return Results.success(userService.checkLogin(username, token));
+//    }
 
     /**
      * 用户退出登录
      */
     @DeleteMapping("/api/short-link/admin/v1/user/logout")
-    public Result<Void> logout(@RequestParam("username") String username, @RequestParam("token") String token) {
-        userService.logout(username, token);
+    public Result<Void> logout(@RequestHeader(TokenConstant.REFRESH_TOKEN) String refreshToken) {
+        userService.logout(refreshToken);
         return Results.success();
     }
-
-
 }

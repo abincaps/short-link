@@ -18,7 +18,7 @@
 
     <properties>
         <java.version>17</java.version>
-        <spring-boot.version>3.0.7</spring-boot.version>
+        <spring-boot.version>3.0.2</spring-boot.version>
         <spring-cloud.version>2022.0.3</spring-cloud.version>
         <spring-cloud-alibaba.version>2022.0.0.0-RC2</spring-cloud-alibaba.version>
         <mybatis-spring-boot-starter.version>3.0.2</mybatis-spring-boot-starter.version>

@@ -1,4 +1,4 @@
-package com.abincaps.shortlink.admin.constant;
+package com.abincaps.shortlink.common.constant;
 
 /**
  * @Author abincaps

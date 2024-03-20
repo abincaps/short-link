@@ -7,7 +7,7 @@ spring:
           predicates:
             - Path=/api/short-link/admin/**
           filters:
-            - name: TokenValidate
+            - name: JwtValidate
               args:
                 whitePathList:
                   - /api/short-link/admin/v1/user/login
@@ -19,7 +19,7 @@ spring:
           predicates:
             - Path=/api/short-link/**
           filters:
-            - name: TokenValidate
+            - name: JwtValidate
 short-link:
   token:
     secret-key: QHYsOmctay12RV44RGBTJXYwWyZiJ3VOcFhFViVOQ31qbGZXK0F6XzYhMiIlVDd3aEUnakI/bDVZaS12d3FwJw==

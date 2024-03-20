@@ -28,7 +28,7 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.abincaps.shortlink.admin.common.convention.exception.ClientException;
 import com.abincaps.shortlink.admin.common.convention.exception.ServiceException;
 import com.abincaps.shortlink.admin.common.enums.UserErrorCodeEnum;
-import com.abincaps.shortlink.admin.constant.UserConstant;
+import com.abincaps.shortlink.common.constant.UserConstant;
 import com.abincaps.shortlink.admin.dao.entity.UserDO;
 import com.abincaps.shortlink.admin.dao.mapper.UserMapper;
 import com.abincaps.shortlink.admin.dto.req.UserLoginReqDTO;
@@ -41,7 +41,6 @@ import com.abincaps.shortlink.admin.service.GroupService;
 import com.abincaps.shortlink.admin.service.UserService;
 import io.jsonwebtoken.Claims;
 import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 import org.redisson.api.RBloomFilter;
 import org.redisson.api.RLock;
 import org.redisson.api.RedissonClient;
@@ -53,7 +52,6 @@ import org.springframework.util.ObjectUtils;
 
 import java.time.Duration;
 import java.util.HashMap;
-import java.util.Map;
 
 import static com.abincaps.shortlink.admin.common.constant.RedisCacheConstant.LOCK_USER_REGISTER_KEY;
 import static com.abincaps.shortlink.admin.common.constant.RedisCacheConstant.USER_LOGIN_KEY;
@@ -141,7 +139,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, UserDO> implements 
 
         if (userDO == null) {
             // TODO 修改枚举 Exception
-            throw new ClientException("用户不存在");
+            throw new ClientException("登录失败");
         }
 
         String refreshTokenKey = getRefreshTokenKey(userDO.getId().toString());
@@ -170,12 +168,20 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, UserDO> implements 
     }
 
     @Override
-    public void logout(String username, String token) {
-        if (checkLogin(username, token)) {
-            stringRedisTemplate.delete(USER_LOGIN_KEY + username);
+    public void logout(String refreshToken) {
+        if (ObjectUtils.isEmpty(refreshToken)) {
             return;
         }
-        throw new ClientException("用户Token不存在或用户未登录");
+
+        Claims claims = JwtUtils.checkToken(refreshToken, tokenProperties.getSecretKey());
+
+        if (ObjectUtils.isEmpty(claims)) {
+            return;
+        }
+
+        log.error(claims.get(UserConstant.USER_ID, String.class));
+
+        stringRedisTemplate.delete(getRefreshTokenKey(claims.get(UserConstant.USER_ID, String.class)));
     }
 
     @Override

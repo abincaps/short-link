@@ -15,20 +15,15 @@
  * limitations under the License.
  */
 
-package com.nageoffer.shortlink.gateway.config;
+package com.abincaps.shortlink.gateway;
 
-import lombok.Data;
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
 
-import java.util.List;
+@SpringBootApplication
+public class GatewayServiceApplication {
 
-/**
- * 过滤器配置
- */
-@Data
-public class Config {
-
-    /**
-     * 白名单前置路径
-     */
-    private List<String> whitePathList;
+    public static void main(String[] args) {
+        SpringApplication.run(GatewayServiceApplication.class, args);
+    }
 }

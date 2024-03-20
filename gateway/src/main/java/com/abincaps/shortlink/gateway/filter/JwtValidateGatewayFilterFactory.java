@@ -1,18 +1,21 @@
-package com.nageoffer.shortlink.gateway.filter;
+package com.abincaps.shortlink.gateway.filter;
 
 import cn.hutool.core.util.ObjectUtil;
 import com.abincaps.shortlink.common.constant.TokenConstant;
-import com.nageoffer.shortlink.gateway.config.Config;
-import com.nageoffer.shortlink.gateway.properties.TokenProperties;
-import com.nageoffer.shortlink.gateway.utils.JwtUtils;
+import com.abincaps.shortlink.common.constant.UserConstant;
+import com.abincaps.shortlink.common.utils.JwtUtils;
+import com.abincaps.shortlink.gateway.config.Config;
+import com.abincaps.shortlink.gateway.properties.TokenProperties;
 import io.jsonwebtoken.Claims;
 import jakarta.annotation.Resource;
 import org.springframework.cloud.gateway.filter.GatewayFilter;
 import org.springframework.cloud.gateway.filter.factory.AbstractGatewayFilterFactory;
+import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.server.reactive.ServerHttpRequest;
 import org.springframework.stereotype.Component;
 import org.springframework.util.CollectionUtils;
+import org.springframework.util.ObjectUtils;
 
 import java.util.List;
 
@@ -21,6 +24,10 @@ public class JwtValidateGatewayFilterFactory extends AbstractGatewayFilterFactor
 
     @Resource
     private TokenProperties tokenProperties;
+
+    public JwtValidateGatewayFilterFactory() {
+        super(Config.class);
+    }
 
     @Override
     public GatewayFilter apply(Config config) {
@@ -36,16 +43,22 @@ public class JwtValidateGatewayFilterFactory extends AbstractGatewayFilterFactor
 
             String accessToken = request.getHeaders().getFirst(TokenConstant.ACCESS_TOKEN);
 
-            Claims claims = JwtUtils.checkToken(accessToken, tokenProperties.getSecretKey());
-
-            if (ObjectUtil.isEmpty(claims)) {
-                //token过期或伪造，响应401
+            // access_token 不存在
+            if (ObjectUtil.isEmpty(accessToken)) {
                 exchange.getResponse().setStatusCode(HttpStatus.UNAUTHORIZED);
                 return exchange.getResponse().setComplete();
             }
 
-            // 向下游微服务传递参数
-            exchange.getRequest().mutate().header("user_id", claims.get("user_id", String.class));
+            Claims claims = JwtUtils.checkToken(accessToken, tokenProperties.getSecretKey());
+
+            // access_token 过期
+            if (ObjectUtils.isEmpty(claims)) {
+                exchange.getResponse().setStatusCode(HttpStatus.UNAUTHORIZED);
+                return exchange.getResponse().setComplete();
+            }
+
+            // 向下游微服务传递 user_id 参数
+            exchange.getRequest().mutate().header(UserConstant.USER_ID, claims.get(UserConstant.USER_ID, String.class));
 
             return chain.filter(exchange);
         };

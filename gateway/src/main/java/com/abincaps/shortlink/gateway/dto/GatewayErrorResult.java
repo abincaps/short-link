@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-package com.nageoffer.shortlink.gateway.dto;
+package com.abincaps.shortlink.gateway.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;

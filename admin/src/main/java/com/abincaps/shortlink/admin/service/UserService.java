@@ -27,7 +27,6 @@ import com.abincaps.shortlink.admin.dto.resp.UserRespDTO;
 
 /**
  * 用户接口层
- * 公众号：马丁玩编程，回复：加群，添加马哥微信（备注：link）获取项目资料
  */
 public interface UserService extends IService<UserDO> {
 
@@ -80,11 +79,9 @@ public interface UserService extends IService<UserDO> {
 
     /**
      * 退出登录
-     *
-     * @param username 用户名
-     * @param token    用户登录 Token
+     * @param refreshToken 长 token
      */
-    void logout(String username, String token);
+    void logout(String refreshToken);
 
     /**
      * 刷新 token
