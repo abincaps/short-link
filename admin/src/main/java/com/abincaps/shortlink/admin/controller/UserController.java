@@ -72,7 +72,7 @@ public class UserController {
     /**
      * 注册用户
      */
-    @PostMapping("/api/short-link/admin/v1/register")
+    @PostMapping("/api/short-link/admin/v1/user/register")
     public Result<Void> register(@RequestBody UserRegisterReqDTO requestParam) {
         userService.register(requestParam);
         return Results.success();
