@@ -20,6 +20,10 @@ spring:
             - Path=/api/short-link/**
           filters:
             - name: JwtValidate
+        - id: short-link
+          uri: lb://short-link-project/**
+          predicates:
+            - Path=/**
 short-link:
   token:
     secret-key: QHYsOmctay12RV44RGBTJXYwWyZiJ3VOcFhFViVOQ31qbGZXK0F6XzYhMiIlVDd3aEUnakI/bDVZaS12d3FwJw==

@@ -24,6 +24,6 @@ short-link:
     time-window: 1
     max-access-count: 20
   token:
-    access-token-ttl: 600
-    refresh-token-ttl: 7200
+    access-token-ttl: 1800
+    refresh-token-ttl: 10800
     secret-key: QHYsOmctay12RV44RGBTJXYwWyZiJ3VOcFhFViVOQ31qbGZXK0F6XzYhMiIlVDd3aEUnakI/bDVZaS12d3FwJw==

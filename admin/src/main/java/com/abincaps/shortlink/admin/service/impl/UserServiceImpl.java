@@ -18,7 +18,7 @@
 package com.abincaps.shortlink.admin.service.impl;
 
 import cn.hutool.core.bean.BeanUtil;
-import com.abincaps.shortlink.common.constant.RedisConstant;
+import com.abincaps.shortlink.common.constant.RedisKeyConstant;
 import com.abincaps.shortlink.common.constant.TokenConstant;
 import com.abincaps.shortlink.common.utils.JwtUtils;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
@@ -229,6 +229,6 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, UserDO> implements 
      * @return RefreshToken 在 Redis 中的 规范 KEY
      */
     private String getRefreshTokenKey(String userId) {
-        return RedisConstant.BIZ_ID + ":" + TokenConstant.REFRESH_TOKEN + ":" + userId;
+        return RedisKeyConstant.BIZ_ID + ":" + TokenConstant.REFRESH_TOKEN + ":" + userId;
     }
 }
