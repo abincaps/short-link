@@ -6,7 +6,20 @@ package com.abincaps.shortlink.common.constant;
  * @Description
  */
 public interface RedisKeyConstant {
-    String BIZ_ID = "short_link";
 
-    String GOTO_SHORT_LINK_KEY = BIZ_ID + ":" + "goto:";
+    /**
+     * 业务标识
+     */
+    String BIZ = "short_link";
+
+    /**
+     * 跳转链接
+     */
+    String GOTO = BIZ + ":" + "goto:";
+
+
+    /**
+     * 链接是否失效
+     */
+    String IS_NULL = BIZ + ":" + "is_null:";
 }

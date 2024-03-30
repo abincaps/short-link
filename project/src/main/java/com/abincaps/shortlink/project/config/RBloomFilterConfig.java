@@ -15,19 +15,26 @@
  * limitations under the License.
  */
 
-package com.abincaps.shortlink.project.service;
+package com.abincaps.shortlink.project.config;
+
+import org.redisson.api.RBloomFilter;
+import org.redisson.api.RedissonClient;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
 
 /**
- * URL 标题接口层
-
+ * 布隆过滤器配置
  */
-public interface UrlTitleService {
+@Configuration
+public class RBloomFilterConfig {
 
     /**
-     * 根据 URL 获取标题
-     *
-     * @param url 目标网站地址
-     * @return 网站标题
+     * 防止短链接创建查询数据库的布隆过滤器
      */
-    String getTitleByUrl(String url);
+    @Bean
+    public RBloomFilter<String> shortUriCreateCachePenetrationBloomFilter(RedissonClient redissonClient) {
+        RBloomFilter<String> cachePenetrationBloomFilter = redissonClient.getBloomFilter("shortUriCreateCachePenetrationBloomFilter");
+        cachePenetrationBloomFilter.tryInit(100000000L, 0.001);
+        return cachePenetrationBloomFilter;
+    }
 }

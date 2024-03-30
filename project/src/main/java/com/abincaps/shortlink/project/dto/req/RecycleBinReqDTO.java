@@ -20,19 +20,14 @@ package com.abincaps.shortlink.project.dto.req;
 import lombok.Data;
 
 /**
- * 回收站恢复功能
+ * 回收站保存功能
 
  */
 @Data
-public class RecycleBinRecoverReqDTO {
-
+public class RecycleBinReqDTO {
+    
     /**
-     * 分组标识
+     * 短链接
      */
-    private String gid;
-
-    /**
-     * 全部短链接
-     */
-    private String fullShortUrl;
+    private String shortUri;
 }

@@ -17,26 +17,22 @@
 
 package com.abincaps.shortlink.project.service.impl;
 
-import cn.hutool.core.bean.BeanUtil;
+import com.abincaps.shortlink.common.constant.RedisKeyConstant;
+import com.abincaps.shortlink.project.dao.entity.ShortLinkDO;
+import com.abincaps.shortlink.project.dao.mapper.ShortLinkMapper;
+import com.abincaps.shortlink.project.dto.req.RecycleBinReqDTO;
+import com.abincaps.shortlink.project.dto.req.ShortLinkRecycleBinPageReqDTO;
+import com.abincaps.shortlink.project.dto.resp.ShortLinkPageRespDTO;
+import com.abincaps.shortlink.project.service.RecycleBinService;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.update.LambdaUpdateWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import com.abincaps.shortlink.project.dao.entity.ShortLinkDO;
-import com.abincaps.shortlink.project.dao.mapper.ShortLinkMapper;
-import com.abincaps.shortlink.project.dto.req.RecycleBinRecoverReqDTO;
-import com.abincaps.shortlink.project.dto.req.RecycleBinRemoveReqDTO;
-import com.abincaps.shortlink.project.dto.req.RecycleBinSaveReqDTO;
-import com.abincaps.shortlink.project.dto.req.ShortLinkRecycleBinPageReqDTO;
-import com.abincaps.shortlink.project.dto.resp.ShortLinkPageRespDTO;
-import com.abincaps.shortlink.project.service.RecycleBinService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.BeanUtils;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.stereotype.Service;
-
-import static com.abincaps.shortlink.project.common.constant.RedisConstant.GOTO_IS_NULL_SHORT_LINK_KEY;
-import static com.abincaps.shortlink.project.common.constant.RedisConstant.GOTO_SHORT_LINK_KEY;
 
 /**
  * 回收站管理接口实现层
@@ -49,63 +45,82 @@ public class RecycleBinServiceImpl extends ServiceImpl<ShortLinkMapper, ShortLin
     private final StringRedisTemplate stringRedisTemplate;
 
     @Override
-    public void saveRecycleBin(RecycleBinSaveReqDTO requestParam) {
+    public void saveRecycleBin(RecycleBinReqDTO recycleBinReqDTO) {
 
         LambdaUpdateWrapper<ShortLinkDO> updateWrapper = Wrappers.lambdaUpdate(ShortLinkDO.class)
-                .eq(ShortLinkDO::getFullShortUrl, requestParam.getFullShortUrl())
-                .eq(ShortLinkDO::getGid, requestParam.getGid())
+                .eq(ShortLinkDO::getShortUri, recycleBinReqDTO.getShortUri())
                 .eq(ShortLinkDO::getEnableStatus, 0)
                 .eq(ShortLinkDO::getDelFlag, 0);
+
         ShortLinkDO shortLinkDO = ShortLinkDO.builder()
                 .enableStatus(1)
                 .build();
 
         baseMapper.update(shortLinkDO, updateWrapper);
 
-        stringRedisTemplate.delete(String.format(GOTO_SHORT_LINK_KEY, requestParam.getFullShortUrl()));
+        // 删除缓存
+        stringRedisTemplate.delete(RedisKeyConstant.GOTO + recycleBinReqDTO.getShortUri());
     }
 
     @Override
     public IPage<ShortLinkPageRespDTO> pageShortLink(ShortLinkRecycleBinPageReqDTO requestParam) {
+
         LambdaQueryWrapper<ShortLinkDO> queryWrapper = Wrappers.lambdaQuery(ShortLinkDO.class)
                 .in(ShortLinkDO::getGid, requestParam.getGidList())
                 .eq(ShortLinkDO::getEnableStatus, 1)
                 .eq(ShortLinkDO::getDelFlag, 0)
                 .orderByDesc(ShortLinkDO::getUpdateTime);
+
         IPage<ShortLinkDO> resultPage = baseMapper.selectPage(requestParam, queryWrapper);
+
+        // 类型转换
         return resultPage.convert(each -> {
-            ShortLinkPageRespDTO result = BeanUtil.toBean(each, ShortLinkPageRespDTO.class);
-            result.setDomain("http://" + result.getDomain());
-            return result;
+            ShortLinkPageRespDTO shortLinkPageRespDTO = new ShortLinkPageRespDTO();
+            BeanUtils.copyProperties(each, shortLinkPageRespDTO);
+            return shortLinkPageRespDTO;
         });
     }
 
     @Override
-    public void recoverRecycleBin(RecycleBinRecoverReqDTO requestParam) {
+    public void recoverRecycleBin(RecycleBinReqDTO requestParam) {
+
         LambdaUpdateWrapper<ShortLinkDO> updateWrapper = Wrappers.lambdaUpdate(ShortLinkDO.class)
-                .eq(ShortLinkDO::getFullShortUrl, requestParam.getFullShortUrl())
-                .eq(ShortLinkDO::getGid, requestParam.getGid())
+                .eq(ShortLinkDO::getShortUri, requestParam.getShortUri())
                 .eq(ShortLinkDO::getEnableStatus, 1)
                 .eq(ShortLinkDO::getDelFlag, 0);
+
         ShortLinkDO shortLinkDO = ShortLinkDO.builder()
-                .enableStatus(0)
+                .enableStatus(1)
                 .build();
+
         baseMapper.update(shortLinkDO, updateWrapper);
-        stringRedisTemplate.delete(String.format(GOTO_IS_NULL_SHORT_LINK_KEY, requestParam.getFullShortUrl()));
+
+        // 删除缓存中的失效标记
+        stringRedisTemplate.delete(RedisKeyConstant.IS_NULL + requestParam.getShortUri());
+
     }
 
     @Override
-    public void removeRecycleBin(RecycleBinRemoveReqDTO requestParam) {
+    public void removeRecycleBin(RecycleBinReqDTO requestParam) {
+
         LambdaUpdateWrapper<ShortLinkDO> updateWrapper = Wrappers.lambdaUpdate(ShortLinkDO.class)
-                .eq(ShortLinkDO::getFullShortUrl, requestParam.getFullShortUrl())
-                .eq(ShortLinkDO::getGid, requestParam.getGid())
+                .eq(ShortLinkDO::getShortUri, requestParam.getShortUri())
                 .eq(ShortLinkDO::getEnableStatus, 1)
                 .eq(ShortLinkDO::getDelTime, 0L)
                 .eq(ShortLinkDO::getDelFlag, 0);
+
         ShortLinkDO delShortLinkDO = ShortLinkDO.builder()
                 .delTime(System.currentTimeMillis())
                 .build();
+
         delShortLinkDO.setDelFlag(1);
+
         baseMapper.update(delShortLinkDO, updateWrapper);
+
+        // 删除缓存中的跳转链接
+        stringRedisTemplate.delete(RedisKeyConstant.GOTO + requestParam.getShortUri());
+
+        // 删除缓存中的失效标记
+        stringRedisTemplate.delete(RedisKeyConstant.IS_NULL + requestParam.getShortUri());
     }
 }

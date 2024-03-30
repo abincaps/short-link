@@ -19,6 +19,7 @@ package com.abincaps.shortlink.project.common.convention.exception;
 
 import com.abincaps.shortlink.project.common.convention.errorcode.BaseErrorCode;
 import com.abincaps.shortlink.project.common.convention.errorcode.IErrorCode;
+import lombok.ToString;
 
 import java.util.Optional;
 
@@ -26,6 +27,8 @@ import java.util.Optional;
  * 服务端异常
 
  */
+
+@ToString
 public class ServiceException extends AbstractException {
 
     public ServiceException(String message) {
@@ -42,14 +45,6 @@ public class ServiceException extends AbstractException {
 
     public ServiceException(String message, Throwable throwable, IErrorCode errorCode) {
         super(Optional.ofNullable(message).orElse(errorCode.message()), throwable, errorCode);
-    }
-
-    @Override
-    public String toString() {
-        return "ServiceException{" +
-                "code='" + errorCode + "'," +
-                "message='" + errorMessage + "'" +
-                '}';
     }
 }
 

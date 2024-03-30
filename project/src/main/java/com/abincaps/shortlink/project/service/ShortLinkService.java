@@ -17,25 +17,19 @@
 
 package com.abincaps.shortlink.project.service;
 
-import com.abincaps.shortlink.common.constant.UserConstant;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.abincaps.shortlink.project.dao.entity.ShortLinkDO;
 import com.abincaps.shortlink.project.dto.biz.ShortLinkStatsRecordDTO;
-import com.abincaps.shortlink.project.dto.req.ShortLinkBatchCreateReqDTO;
 import com.abincaps.shortlink.project.dto.req.ShortLinkCreateReqDTO;
 import com.abincaps.shortlink.project.dto.req.ShortLinkPageReqDTO;
 import com.abincaps.shortlink.project.dto.req.ShortLinkUpdateReqDTO;
-import com.abincaps.shortlink.project.dto.resp.ShortLinkBatchCreateRespDTO;
 import com.abincaps.shortlink.project.dto.resp.ShortLinkCreateRespDTO;
 import com.abincaps.shortlink.project.dto.resp.ShortLinkGroupCountQueryRespDTO;
 import com.abincaps.shortlink.project.dto.resp.ShortLinkPageRespDTO;
-import jakarta.servlet.ServletRequest;
-import jakarta.servlet.ServletResponse;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.SneakyThrows;
-import org.springframework.web.bind.annotation.RequestHeader;
 
 import java.util.List;
 
@@ -83,7 +77,7 @@ public interface ShortLinkService extends IService<ShortLinkDO> {
      * @param response HTTP 响应
      */
     @SneakyThrows
-    void restoreUrl(String shortUri, HttpServletRequest request, HttpServletResponse response);
+    void redirectUrl(String shortUri, HttpServletRequest request, HttpServletResponse response);
 
     /**
      * 短链接统计

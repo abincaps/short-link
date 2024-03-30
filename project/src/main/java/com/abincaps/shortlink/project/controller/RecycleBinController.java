@@ -20,9 +20,7 @@ package com.abincaps.shortlink.project.controller;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.abincaps.shortlink.project.common.convention.result.Result;
 import com.abincaps.shortlink.project.common.convention.result.Results;
-import com.abincaps.shortlink.project.dto.req.RecycleBinRecoverReqDTO;
-import com.abincaps.shortlink.project.dto.req.RecycleBinRemoveReqDTO;
-import com.abincaps.shortlink.project.dto.req.RecycleBinSaveReqDTO;
+import com.abincaps.shortlink.project.dto.req.RecycleBinReqDTO;
 import com.abincaps.shortlink.project.dto.req.ShortLinkRecycleBinPageReqDTO;
 import com.abincaps.shortlink.project.dto.resp.ShortLinkPageRespDTO;
 import com.abincaps.shortlink.project.service.RecycleBinService;
@@ -46,7 +44,7 @@ public class RecycleBinController {
      * 保存回收站
      */
     @PostMapping("/api/short-link/v1/recycle-bin/save")
-    public Result<Void> saveRecycleBin(@RequestBody RecycleBinSaveReqDTO requestParam) {
+    public Result<Void> saveRecycleBin(@RequestBody RecycleBinReqDTO requestParam) {
         recycleBinService.saveRecycleBin(requestParam);
         return Results.success();
     }
@@ -63,7 +61,7 @@ public class RecycleBinController {
      * 恢复短链接
      */
     @PostMapping("/api/short-link/v1/recycle-bin/recover")
-    public Result<Void> recoverRecycleBin(@RequestBody RecycleBinRecoverReqDTO requestParam) {
+    public Result<Void> recoverRecycleBin(@RequestBody RecycleBinReqDTO requestParam) {
         recycleBinService.recoverRecycleBin(requestParam);
         return Results.success();
     }
@@ -72,7 +70,7 @@ public class RecycleBinController {
      * 移除短链接
      */
     @PostMapping("/api/short-link/v1/recycle-bin/remove")
-    public Result<Void> removeRecycleBin(@RequestBody RecycleBinRemoveReqDTO requestParam) {
+    public Result<Void> removeRecycleBin(@RequestBody RecycleBinReqDTO requestParam) {
         recycleBinService.removeRecycleBin(requestParam);
         return Results.success();
     }

@@ -72,12 +72,16 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, UserDO> implements 
 
     @Override
     public UserRespDTO getUserByUsername(String username) {
+
         LambdaQueryWrapper<UserDO> queryWrapper = Wrappers.lambdaQuery(UserDO.class)
                 .eq(UserDO::getUsername, username);
+
         UserDO userDO = baseMapper.selectOne(queryWrapper);
+
         if (userDO == null) {
             throw new ServiceException(UserErrorCodeEnum.USER_NULL);
         }
+
         UserRespDTO result = new UserRespDTO();
         BeanUtils.copyProperties(userDO, result);
         return result;
@@ -229,6 +233,6 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, UserDO> implements 
      * @return RefreshToken 在 Redis 中的 规范 KEY
      */
     private String getRefreshTokenKey(String userId) {
-        return RedisKeyConstant.BIZ_ID + ":" + TokenConstant.REFRESH_TOKEN + ":" + userId;
+        return RedisKeyConstant.BIZ + ":" + TokenConstant.REFRESH_TOKEN + ":" + userId;
     }
 }

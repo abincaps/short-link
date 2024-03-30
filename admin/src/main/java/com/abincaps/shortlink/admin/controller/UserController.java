@@ -42,24 +42,25 @@ public class UserController {
 
     private final UserService userService;
 
+    // TODO BUG 可以查询任意用户信息
     /**
      * 根据用户名查询用户信息
      */
-    @GetMapping("/api/short-link/admin/v1/user/{username}")
-    public Result<UserRespDTO> getUserByUsername(@PathVariable("username") String username) {
-        return Results.success(userService.getUserByUsername(username));
-    }
+//    @GetMapping("/api/short-link/admin/v1/user/{username}")
+//    public Result<UserRespDTO> getUserByUsername(@PathVariable("username") String username) {
+//        return Results.success(userService.getUserByUsername(username));
+//    }
 
     /**
      * 根据用户名查询无脱敏用户信息
      */
-    @GetMapping("/api/short-link/admin/v1/actual/user/{username}")
-    public Result<UserActualRespDTO> getActualUserByUsername(@PathVariable("username") String username) {
-        UserRespDTO useRespDTO = userService.getUserByUsername(username);
-        UserActualRespDTO userActualRespDTO = new UserActualRespDTO();
-        BeanUtils.copyProperties(useRespDTO, userActualRespDTO);
-        return Results.success(userActualRespDTO);
-    }
+//    @GetMapping("/api/short-link/admin/v1/actual/user/{username}")
+//    public Result<UserActualRespDTO> getActualUserByUsername(@PathVariable("username") String username) {
+//        UserRespDTO useRespDTO = userService.getUserByUsername(username);
+//        UserActualRespDTO userActualRespDTO = new UserActualRespDTO();
+//        BeanUtils.copyProperties(useRespDTO, userActualRespDTO);
+//        return Results.success(userActualRespDTO);
+//    }
 
     /**
      * 查询用户名是否存在
@@ -111,14 +112,13 @@ public class UserController {
         return Results.success(loginVO);
     }
 
-    // TODO 准备移除检查用户是否登录
-//    /**
-//     * 检查用户是否登录
-//     */
-//    @GetMapping("/api/short-link/admin/v1/user/check-login")
-//    public Result<Boolean> checkLogin(@RequestParam("username") String username, @RequestParam("token") String token) {
-//        return Results.success(userService.checkLogin(username, token));
-//    }
+    /**
+     * 检查用户是否登录
+     */
+    @GetMapping("/api/short-link/admin/v1/user/check-login")
+    public Result<Boolean> checkLogin(@RequestParam("username") String username, @RequestParam("token") String token) {
+        return Results.success(userService.checkLogin(username, token));
+    }
 
     /**
      * 用户退出登录

@@ -17,24 +17,27 @@
 
 package com.abincaps.shortlink.project.config;
 
-import org.redisson.api.RBloomFilter;
-import org.redisson.api.RedissonClient;
+import com.baomidou.mybatisplus.annotation.DbType;
+import com.baomidou.mybatisplus.extension.plugins.MybatisPlusInterceptor;
+import com.baomidou.mybatisplus.extension.plugins.inner.PaginationInnerInterceptor;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 /**
- * 布隆过滤器配置
+ * 数据库持久层配置类
  */
 @Configuration
-public class RBloomFilterConfiguration {
+public class DataBaseConfig {
 
     /**
-     * 防止短链接创建查询数据库的布隆过滤器
+     * 分页插件
      */
     @Bean
-    public RBloomFilter<String> shortUriCreateCachePenetrationBloomFilter(RedissonClient redissonClient) {
-        RBloomFilter<String> cachePenetrationBloomFilter = redissonClient.getBloomFilter("shortUriCreateCachePenetrationBloomFilter");
-        cachePenetrationBloomFilter.tryInit(100000000L, 0.001);
-        return cachePenetrationBloomFilter;
+    @ConditionalOnMissingBean
+    public MybatisPlusInterceptor mybatisPlusInterceptor() {
+        MybatisPlusInterceptor interceptor = new MybatisPlusInterceptor();
+        interceptor.addInnerInterceptor(new PaginationInnerInterceptor(DbType.MYSQL));
+        return interceptor;
     }
 }

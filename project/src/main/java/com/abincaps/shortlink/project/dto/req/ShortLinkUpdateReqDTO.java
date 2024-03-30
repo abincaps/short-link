@@ -39,7 +39,6 @@ public class ShortLinkUpdateReqDTO {
      */
     private String shortUrl;
 
-    // TODO 去除原始链接
     /**
      * 原始分组标识
      */

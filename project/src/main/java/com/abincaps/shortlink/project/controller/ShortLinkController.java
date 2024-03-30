@@ -22,18 +22,14 @@ import com.alibaba.csp.sentinel.annotation.SentinelResource;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.abincaps.shortlink.project.common.convention.result.Result;
 import com.abincaps.shortlink.project.common.convention.result.Results;
-import com.abincaps.shortlink.project.dto.req.ShortLinkBatchCreateReqDTO;
 import com.abincaps.shortlink.project.dto.req.ShortLinkCreateReqDTO;
 import com.abincaps.shortlink.project.dto.req.ShortLinkPageReqDTO;
 import com.abincaps.shortlink.project.dto.req.ShortLinkUpdateReqDTO;
-import com.abincaps.shortlink.project.dto.resp.ShortLinkBatchCreateRespDTO;
 import com.abincaps.shortlink.project.dto.resp.ShortLinkCreateRespDTO;
 import com.abincaps.shortlink.project.dto.resp.ShortLinkGroupCountQueryRespDTO;
 import com.abincaps.shortlink.project.dto.resp.ShortLinkPageRespDTO;
 import com.abincaps.shortlink.project.handler.CustomBlockHandler;
 import com.abincaps.shortlink.project.service.ShortLinkService;
-import jakarta.servlet.ServletRequest;
-import jakarta.servlet.ServletResponse;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
@@ -54,8 +50,8 @@ public class ShortLinkController {
      * 短链接跳转原始链接
      */
     @GetMapping("/{short-uri}")
-    public void restoreUrl(@PathVariable("short-uri") String shortUri, HttpServletRequest request, HttpServletResponse response) {
-        shortLinkService.restoreUrl(shortUri, request, response);
+    public void redirectUrl(@PathVariable("short-uri") String shortUri, HttpServletRequest request, HttpServletResponse response) {
+        shortLinkService.redirectUrl(shortUri, request, response);
     }
 
     /**
