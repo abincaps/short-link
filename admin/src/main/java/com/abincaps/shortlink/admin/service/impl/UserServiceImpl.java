@@ -71,10 +71,10 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, UserDO> implements 
     private final TokenProperties tokenProperties;
 
     @Override
-    public UserRespDTO getUserByUsername(String username) {
+    public UserRespDTO getUserByUserId(String userId) {
 
         LambdaQueryWrapper<UserDO> queryWrapper = Wrappers.lambdaQuery(UserDO.class)
-                .eq(UserDO::getUsername, username);
+                .eq(UserDO::getId, userId);
 
         UserDO userDO = baseMapper.selectOne(queryWrapper);
 
@@ -83,7 +83,9 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, UserDO> implements 
         }
 
         UserRespDTO result = new UserRespDTO();
+
         BeanUtils.copyProperties(userDO, result);
+
         return result;
     }
 

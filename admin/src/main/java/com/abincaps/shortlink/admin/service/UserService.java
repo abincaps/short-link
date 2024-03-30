@@ -33,10 +33,10 @@ public interface UserService extends IService<UserDO> {
     /**
      * 根据用户名查询用户信息
      *
-     * @param username 用户名
+     * @param userId 用户名
      * @return 用户返回实体
      */
-    UserRespDTO getUserByUsername(String username);
+    UserRespDTO getUserByUserId(String userId);
 
     /**
      * 查询用户名是否存在

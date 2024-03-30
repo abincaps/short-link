@@ -28,10 +28,6 @@ import lombok.Data;
 @Data
 public class UserRespDTO {
 
-    /**
-     * id
-     */
-    private Long id;
 
     /**
      * 用户名

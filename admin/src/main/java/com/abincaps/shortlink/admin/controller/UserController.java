@@ -24,12 +24,11 @@ import com.abincaps.shortlink.admin.common.convention.result.Results;
 import com.abincaps.shortlink.admin.dto.req.UserLoginReqDTO;
 import com.abincaps.shortlink.admin.dto.req.UserRegisterReqDTO;
 import com.abincaps.shortlink.admin.dto.req.UserUpdateReqDTO;
-import com.abincaps.shortlink.admin.dto.resp.UserActualRespDTO;
 import com.abincaps.shortlink.admin.dto.resp.UserLoginVO;
 import com.abincaps.shortlink.admin.dto.resp.UserRespDTO;
 import com.abincaps.shortlink.admin.service.UserService;
+import com.abincaps.shortlink.common.constant.UserConstant;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.BeanUtils;
 import org.springframework.util.ObjectUtils;
 import org.springframework.web.bind.annotation.*;
 
@@ -42,25 +41,13 @@ public class UserController {
 
     private final UserService userService;
 
-    // TODO BUG 可以查询任意用户信息
     /**
-     * 根据用户名查询用户信息
+     * 根据用户名查询用户脱敏信息
      */
-//    @GetMapping("/api/short-link/admin/v1/user/{username}")
-//    public Result<UserRespDTO> getUserByUsername(@PathVariable("username") String username) {
-//        return Results.success(userService.getUserByUsername(username));
-//    }
-
-    /**
-     * 根据用户名查询无脱敏用户信息
-     */
-//    @GetMapping("/api/short-link/admin/v1/actual/user/{username}")
-//    public Result<UserActualRespDTO> getActualUserByUsername(@PathVariable("username") String username) {
-//        UserRespDTO useRespDTO = userService.getUserByUsername(username);
-//        UserActualRespDTO userActualRespDTO = new UserActualRespDTO();
-//        BeanUtils.copyProperties(useRespDTO, userActualRespDTO);
-//        return Results.success(userActualRespDTO);
-//    }
+    @GetMapping("/api/short-link/admin/v1/user-info")
+    public Result<UserRespDTO> getUserByUserId(@RequestHeader(UserConstant.USER_ID) String userId) {
+        return Results.success(userService.getUserByUserId(userId));
+    }
 
     /**
      * 查询用户名是否存在
