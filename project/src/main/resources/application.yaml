@@ -21,8 +21,7 @@ spring:
         server-addr: 192.168.150.102:8848
 
 short-link:
-  domain:
-    default: 127.0.0.1:8000
+  domain: 127.0.0.1:8000
   stats:
     locale:
       amap-key: 824c511f0997586ea016f979fdb23087

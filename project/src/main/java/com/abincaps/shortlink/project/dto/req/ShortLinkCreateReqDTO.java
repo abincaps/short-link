@@ -50,6 +50,7 @@ public class ShortLinkCreateReqDTO {
      */
     private String gid;
 
+    // TODO 准备移除创建类型
     /**
      * 创建类型 0：接口创建 1：控制台创建
      */

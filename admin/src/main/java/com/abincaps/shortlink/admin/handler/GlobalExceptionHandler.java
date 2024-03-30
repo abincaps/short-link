@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-package com.abincaps.shortlink.admin.common.serialize.web;
+package com.abincaps.shortlink.admin.handler;
 
 import cn.hutool.core.collection.CollectionUtil;
 import cn.hutool.core.util.ReflectUtil;

@@ -17,6 +17,7 @@
 
 package com.abincaps.shortlink.project.controller;
 
+import com.abincaps.shortlink.common.constant.UserConstant;
 import com.alibaba.csp.sentinel.annotation.SentinelResource;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.abincaps.shortlink.project.common.convention.result.Result;
@@ -36,12 +37,7 @@ import jakarta.servlet.ServletResponse;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -76,19 +72,11 @@ public class ShortLinkController {
     }
 
     /**
-     * 批量创建短链接
-     */
-    @PostMapping("/api/short-link/v1/create/batch")
-    public Result<ShortLinkBatchCreateRespDTO> batchCreateShortLink(@RequestBody ShortLinkBatchCreateReqDTO requestParam) {
-        return Results.success(shortLinkService.batchCreateShortLink(requestParam));
-    }
-
-    /**
      * 修改短链接
      */
     @PostMapping("/api/short-link/v1/update")
-    public Result<Void> updateShortLink(@RequestBody ShortLinkUpdateReqDTO requestParam) {
-        shortLinkService.updateShortLink(requestParam);
+    public Result<Void> updateShortLink(@RequestBody ShortLinkUpdateReqDTO requestParam, @RequestHeader(UserConstant.USER_ID) String userId) {
+        shortLinkService.updateShortLink(requestParam, userId);
         return Results.success();
     }
 
@@ -106,5 +94,13 @@ public class ShortLinkController {
     @GetMapping("/api/short-link/v1/count")
     public Result<List<ShortLinkGroupCountQueryRespDTO>> listGroupShortLinkCount(@RequestParam("requestParam") List<String> requestParam) {
         return Results.success(shortLinkService.listGroupShortLinkCount(requestParam));
+    }
+
+    /**
+     * 短链接不存在跳转页面
+     */
+    @RequestMapping("/notfound")
+    public String notfound() {
+        return "notfound";
     }
 }

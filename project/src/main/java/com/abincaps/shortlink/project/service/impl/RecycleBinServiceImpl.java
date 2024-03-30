@@ -50,6 +50,7 @@ public class RecycleBinServiceImpl extends ServiceImpl<ShortLinkMapper, ShortLin
 
     @Override
     public void saveRecycleBin(RecycleBinSaveReqDTO requestParam) {
+
         LambdaUpdateWrapper<ShortLinkDO> updateWrapper = Wrappers.lambdaUpdate(ShortLinkDO.class)
                 .eq(ShortLinkDO::getFullShortUrl, requestParam.getFullShortUrl())
                 .eq(ShortLinkDO::getGid, requestParam.getGid())
@@ -58,7 +59,9 @@ public class RecycleBinServiceImpl extends ServiceImpl<ShortLinkMapper, ShortLin
         ShortLinkDO shortLinkDO = ShortLinkDO.builder()
                 .enableStatus(1)
                 .build();
+
         baseMapper.update(shortLinkDO, updateWrapper);
+
         stringRedisTemplate.delete(String.format(GOTO_SHORT_LINK_KEY, requestParam.getFullShortUrl()));
     }
 

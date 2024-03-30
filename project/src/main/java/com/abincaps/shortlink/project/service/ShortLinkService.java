@@ -17,6 +17,7 @@
 
 package com.abincaps.shortlink.project.service;
 
+import com.abincaps.shortlink.common.constant.UserConstant;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.abincaps.shortlink.project.dao.entity.ShortLinkDO;
@@ -34,6 +35,7 @@ import jakarta.servlet.ServletResponse;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.SneakyThrows;
+import org.springframework.web.bind.annotation.RequestHeader;
 
 import java.util.List;
 
@@ -51,19 +53,11 @@ public interface ShortLinkService extends IService<ShortLinkDO> {
     ShortLinkCreateRespDTO createShortLink(ShortLinkCreateReqDTO requestParam);
 
     /**
-     * 批量创建短链接
-     *
-     * @param requestParam 批量创建短链接请求参数
-     * @return 批量创建短链接返回参数
-     */
-    ShortLinkBatchCreateRespDTO batchCreateShortLink(ShortLinkBatchCreateReqDTO requestParam);
-
-    /**
      * 修改短链接
      *
      * @param requestParam 修改短链接请求参数
      */
-    void updateShortLink(ShortLinkUpdateReqDTO requestParam);
+    void updateShortLink(ShortLinkUpdateReqDTO requestParam, String userId);
 
     /**
      * 分页查询短链接

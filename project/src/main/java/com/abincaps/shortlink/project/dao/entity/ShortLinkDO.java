@@ -54,9 +54,9 @@ public class ShortLinkDO extends BaseDO {
     private String shortUri;
 
     /**
-     * 完整短链接
+     * 创建者ID
      */
-    private String fullShortUrl;
+    private Long userId;
 
     /**
      * 原始链接
@@ -79,11 +79,6 @@ public class ShortLinkDO extends BaseDO {
     private Integer enableStatus;
 
     /**
-     * 创建类型 0：接口创建 1：控制台创建
-     */
-    private Integer createdType;
-
-    /**
      * 有效期类型 0：永久有效 1：自定义
      */
     private Integer validDateType;
@@ -98,11 +93,6 @@ public class ShortLinkDO extends BaseDO {
      */
     @TableField("`describe`")
     private String describe;
-
-    /**
-     * 网站标识
-     */
-    private String favicon;
 
     /**
      * 历史PV

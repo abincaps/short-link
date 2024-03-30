@@ -35,10 +35,11 @@ public class ShortLinkUpdateReqDTO {
     private String originUrl;
 
     /**
-     * 完整短链接
+     * 短链接
      */
-    private String fullShortUrl;
+    private String shortUrl;
 
+    // TODO 去除原始链接
     /**
      * 原始分组标识
      */
