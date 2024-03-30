@@ -15,11 +15,11 @@
  * limitations under the License.
  */
 
-package com.abincaps.shortlink.admin.common.convention.result;
+package com.abincaps.shortlink.admin.common.result;
 
-import com.abincaps.shortlink.admin.common.convention.errorcode.BaseErrorCode;
-import com.abincaps.shortlink.admin.common.convention.errorcode.ErrorCode;
-import com.abincaps.shortlink.admin.common.convention.exception.AbstractException;
+import com.abincaps.shortlink.admin.common.errorcode.BaseErrorCode;
+import com.abincaps.shortlink.admin.common.errorcode.ErrorCode;
+import com.abincaps.shortlink.admin.common.exception.AbstractException;
 
 import java.util.Optional;
 

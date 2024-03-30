@@ -18,7 +18,7 @@
 package com.abincaps.shortlink.admin.controller;
 
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import com.abincaps.shortlink.admin.common.convention.result.Result;
+import com.abincaps.shortlink.admin.common.result.Result;
 import com.abincaps.shortlink.admin.remote.ShortLinkActualRemoteService;
 import com.abincaps.shortlink.admin.remote.dto.req.ShortLinkGroupStatsAccessRecordReqDTO;
 import com.abincaps.shortlink.admin.remote.dto.req.ShortLinkGroupStatsReqDTO;

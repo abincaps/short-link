@@ -17,7 +17,7 @@
 
 package com.abincaps.shortlink.admin.common.enums;
 
-import com.abincaps.shortlink.admin.common.convention.errorcode.ErrorCode;
+import com.abincaps.shortlink.admin.common.errorcode.ErrorCode;
 
 /**
  * 用户错误码

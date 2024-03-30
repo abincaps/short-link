@@ -18,7 +18,7 @@
 package com.abincaps.shortlink.admin.service;
 
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import com.abincaps.shortlink.admin.common.convention.result.Result;
+import com.abincaps.shortlink.admin.common.result.Result;
 import com.abincaps.shortlink.admin.remote.dto.req.ShortLinkRecycleBinPageReqDTO;
 import com.abincaps.shortlink.admin.remote.dto.resp.ShortLinkPageRespDTO;
 

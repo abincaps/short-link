@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-package com.abincaps.shortlink.admin.common.convention.errorcode;
+package com.abincaps.shortlink.admin.common.errorcode;
 
 /**
  * 基础错误码定义

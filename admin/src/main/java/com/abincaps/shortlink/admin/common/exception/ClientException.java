@@ -15,10 +15,10 @@
  * limitations under the License.
  */
 
-package com.abincaps.shortlink.admin.common.convention.exception;
+package com.abincaps.shortlink.admin.common.exception;
 
-import com.abincaps.shortlink.admin.common.convention.errorcode.BaseErrorCode;
-import com.abincaps.shortlink.admin.common.convention.errorcode.ErrorCode;
+import com.abincaps.shortlink.admin.common.errorcode.BaseErrorCode;
+import com.abincaps.shortlink.admin.common.errorcode.ErrorCode;
 
 /**
  * 客户端异常

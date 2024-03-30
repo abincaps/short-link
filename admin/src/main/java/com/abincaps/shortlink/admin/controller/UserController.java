@@ -18,9 +18,9 @@
 package com.abincaps.shortlink.admin.controller;
 
 import com.abincaps.shortlink.common.constant.TokenConstant;
-import com.abincaps.shortlink.admin.common.convention.errorcode.BaseErrorCode;
-import com.abincaps.shortlink.admin.common.convention.result.Result;
-import com.abincaps.shortlink.admin.common.convention.result.Results;
+import com.abincaps.shortlink.admin.common.errorcode.BaseErrorCode;
+import com.abincaps.shortlink.admin.common.result.Result;
+import com.abincaps.shortlink.admin.common.result.Results;
 import com.abincaps.shortlink.admin.dto.req.UserLoginReqDTO;
 import com.abincaps.shortlink.admin.dto.req.UserRegisterReqDTO;
 import com.abincaps.shortlink.admin.dto.req.UserUpdateReqDTO;

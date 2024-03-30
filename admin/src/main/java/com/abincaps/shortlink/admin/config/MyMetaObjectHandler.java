@@ -28,7 +28,7 @@ import java.util.Date;
  * MyBatis-Plus 原数据自动填充类
  */
 @Primary
-@Component(value = "myMetaObjectHandlerByAdmin")
+@Component
 public class MyMetaObjectHandler implements MetaObjectHandler {
 
     // TODO Date 改成 LocalDateTime

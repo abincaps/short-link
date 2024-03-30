@@ -15,9 +15,9 @@
  * limitations under the License.
  */
 
-package com.abincaps.shortlink.admin.common.convention.exception;
+package com.abincaps.shortlink.admin.common.exception;
 
-import com.abincaps.shortlink.admin.common.convention.errorcode.ErrorCode;
+import com.abincaps.shortlink.admin.common.errorcode.ErrorCode;
 import lombok.Getter;
 import org.springframework.util.StringUtils;
 

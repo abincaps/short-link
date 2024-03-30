@@ -17,8 +17,8 @@
 
 package com.abincaps.shortlink.admin.controller;
 
-import com.abincaps.shortlink.admin.common.convention.result.Result;
-import com.abincaps.shortlink.admin.common.convention.result.Results;
+import com.abincaps.shortlink.admin.common.result.Result;
+import com.abincaps.shortlink.admin.common.result.Results;
 import com.abincaps.shortlink.admin.dto.req.ShortLinkGroupSaveReqDTO;
 import com.abincaps.shortlink.admin.dto.req.ShortLinkGroupSortReqDTO;
 import com.abincaps.shortlink.admin.dto.req.ShortLinkGroupUpdateReqDTO;
