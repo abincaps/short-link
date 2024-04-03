@@ -17,13 +17,16 @@
 
 package com.abincaps.shortlink.admin.dto.req;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.experimental.Accessors;
 
 /**
  * 短链接分组创建参数
 
  */
 @Data
+@Accessors(chain = true)
 public class ShortLinkGroupSaveReqDTO {
 
     /**

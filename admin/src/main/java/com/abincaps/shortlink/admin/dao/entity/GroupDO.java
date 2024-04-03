@@ -39,19 +39,14 @@ public class GroupDO extends BaseDO {
     private Long id;
 
     /**
-     * 分组标识
-     */
-    private String gid;
-
-    /**
      * 分组名称
      */
     private String name;
 
     /**
-     * 创建分组用户名
+     * 创建分组用户ID
      */
-    private String username;
+    private String userId;
 
     /**
      * 分组排序

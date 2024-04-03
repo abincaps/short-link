@@ -29,10 +29,11 @@ public class ShortLinkGroupUpdateReqDTO {
     /**
      * 分组标识
      */
-    private String gid;
+    private String groupId;
 
     /**
      * 分组名
      */
+
     private String name;
 }

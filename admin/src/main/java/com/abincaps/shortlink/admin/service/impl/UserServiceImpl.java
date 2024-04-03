@@ -18,6 +18,7 @@
 package com.abincaps.shortlink.admin.service.impl;
 
 import cn.hutool.core.bean.BeanUtil;
+import com.abincaps.shortlink.admin.dto.req.ShortLinkGroupSaveReqDTO;
 import com.abincaps.shortlink.common.constant.RedisKeyConstant;
 import com.abincaps.shortlink.common.constant.TokenConstant;
 import com.abincaps.shortlink.common.utils.JwtUtils;
@@ -97,24 +98,38 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, UserDO> implements 
     @Override
     public void register(UserRegisterReqDTO requestParam) {
 
-        if (!hasUsername(requestParam.getUsername())) {
-            throw new ClientException(USER_NAME_EXIST);
-        }
+        // TODO 移除判断用户名是否存在
+//        if (!hasUsername(requestParam.getUsername())) {
+//            throw new ClientException(USER_NAME_EXIST);
+//        }
+        // TODO 加入邮件验证
 
         RLock lock = redissonClient.getLock(LOCK_USER_REGISTER_KEY + requestParam.getUsername());
+
+        UserDO userDO = new UserDO();
+        BeanUtils.copyProperties(requestParam, userDO);
+
         try {
             if (lock.tryLock()) {
                 try {
-                    int inserted = baseMapper.insert(BeanUtil.toBean(requestParam, UserDO.class));
+                    // TODO toBean
+                    int inserted = baseMapper.insert(userDO);
+
                     if (inserted < 1) {
                         throw new ClientException(USER_SAVE_ERROR);
                     }
+
                 } catch (DuplicateKeyException ex) {
                     throw new ClientException(USER_EXIST);
                 }
 
                 userRegisterCachePenetrationBloomFilter.add(requestParam.getUsername());
-                groupService.saveGroup(requestParam.getUsername(), "默认分组");
+
+                // TODO 设置枚举字段
+                ShortLinkGroupSaveReqDTO shortLinkGroupSaveReqDTO = new ShortLinkGroupSaveReqDTO().setName("默认分组");
+
+                groupService.saveGroup(shortLinkGroupSaveReqDTO, userDO.getId().toString());
+
                 return;
             }
             throw new ClientException(USER_NAME_EXIST);

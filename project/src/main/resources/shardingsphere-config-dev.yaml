@@ -15,12 +15,6 @@ rules:
           standard:
             shardingColumn: gid
             shardingAlgorithmName: link_table_hash_mod
-      t_link_goto:
-        actualDataNodes: ds_0.t_link_goto_${0..1}
-        tableStrategy:
-          standard:
-            shardingColumn: full_short_url
-            shardingAlgorithmName: link_goto_table_hash_mod
       t_link_stats_today:
         actualDataNodes: ds_0.t_link_stats_today_${0..1}
         tableStrategy:
@@ -31,10 +25,6 @@ rules:
       - t_link, t_link_stats_today
     shardingAlgorithms:
       link_table_hash_mod:
-        type: HASH_MOD
-        props:
-          sharding-count: 2
-      link_goto_table_hash_mod:
         type: HASH_MOD
         props:
           sharding-count: 2

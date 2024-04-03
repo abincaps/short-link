@@ -24,7 +24,9 @@ import com.abincaps.shortlink.admin.dto.req.ShortLinkGroupSortReqDTO;
 import com.abincaps.shortlink.admin.dto.req.ShortLinkGroupUpdateReqDTO;
 import com.abincaps.shortlink.admin.dto.resp.ShortLinkGroupRespDTO;
 import com.abincaps.shortlink.admin.service.GroupService;
+import com.abincaps.shortlink.common.constant.UserConstant;
 import lombok.RequiredArgsConstructor;
+import org.apache.catalina.User;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -42,8 +44,8 @@ public class GroupController {
      * 新增短链接分组
      */
     @PostMapping("/api/short-link/admin/v1/group")
-    public Result<Void> save(@RequestBody ShortLinkGroupSaveReqDTO requestParam) {
-        groupService.saveGroup(requestParam.getName());
+    public Result<Void> save(@RequestBody ShortLinkGroupSaveReqDTO requestParam, @RequestHeader(UserConstant.USER_ID) String userId) {
+        groupService.saveGroup(requestParam, userId);
         return Results.success();
     }
 
@@ -51,16 +53,16 @@ public class GroupController {
      * 查询短链接分组集合
      */
     @GetMapping("/api/short-link/admin/v1/group")
-    public Result<List<ShortLinkGroupRespDTO>> listGroup() {
-        return Results.success(groupService.listGroup());
+    public Result<List<ShortLinkGroupRespDTO>> listGroup(@RequestHeader(UserConstant.USER_ID) String userId) {
+        return Results.success(groupService.listGroup(userId));
     }
 
     /**
      * 修改短链接分组名称
      */
     @PutMapping("/api/short-link/admin/v1/group")
-    public Result<Void> updateGroup(@RequestBody ShortLinkGroupUpdateReqDTO requestParam) {
-        groupService.updateGroup(requestParam);
+    public Result<Void> updateGroup(@RequestBody ShortLinkGroupUpdateReqDTO requestParam, @RequestHeader(UserConstant.USER_ID) String userId) {
+        groupService.updateGroup(requestParam, userId);
         return Results.success();
     }
 
@@ -68,17 +70,8 @@ public class GroupController {
      * 删除短链接分组
      */
     @DeleteMapping("/api/short-link/admin/v1/group")
-    public Result<Void> updateGroup(@RequestParam String gid) {
-        groupService.deleteGroup(gid);
-        return Results.success();
-    }
-
-    /**
-     * 排序短链接分组
-     */
-    @PostMapping("/api/short-link/admin/v1/group/sort")
-    public Result<Void> sortGroup(@RequestBody List<ShortLinkGroupSortReqDTO> requestParam) {
-        groupService.sortGroup(requestParam);
+    public Result<Void> deleteGroup(@RequestParam String groupId, @RequestHeader(UserConstant.USER_ID)String userId) {
+        groupService.deleteGroup(groupId, userId);
         return Results.success();
     }
 }
